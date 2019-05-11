@@ -1,0 +1,202 @@
+<p>
+Software testing is the process in which a developer ensures that the actual output of the software matches with the desired output by providing some test inputs to the software. Software testing is an important step because if performed properly, it can help the developer to find the <a href="https://en.wikipedia.org/wiki/Software_bug">bugs</a> in the software in very less amount of time.</p>
+
+<p>
+Software testing can be divided into two classes, <strong>Mannual testing</strong> and <strong>Automated testing</strong>. Automated testing is the execution of your tests using a script instead of a human. In this article we'll discuss about automated software testing only.</p> 
+
+<p>Now we'll explore some python tools to create automated tests for your application, but before that let us write a simple application over which we will perform all the tests.</p>
+[sourcecode language="Python3" highlight=""]
+class Square:
+	def __init__(self, side):
+		""" creates a square having the given side
+		"""
+		self.side = side
+
+	def area(self):
+		""" returns area of the square
+		"""
+		return self.side**2
+
+	def perimeter(self):
+		""" returns perimeter of the square
+		"""
+		return 4 * self.side
+
+	def __repr__(self):
+		""" declares how a Square object should be printed
+		"""
+		s = 'Square with side = ' + str(self.side) + '\n' + \
+		'Area = ' + str(self.area()) + '\n' + \
+		'Perimeter = ' + str(self.perimeter())
+		return s
+
+
+if __name__ == '__main__':
+	# read input from the user
+	side = int(input('enter the side length to create a Square: '))
+	
+	# create a square with the provided side
+	square = Square(side)
+
+	# print the created square
+	print(square)
+[/sourcecode]
+
+<p>Now that we have our software ready, let us debug it using various testing tools provided for python.</p>
+
+<h3>The 'unittest' module</h3>
+One of the major problems with mannual testing is that, it requires time and effort. In mannual testing, you test your application over some input, if it fails, either you note it down or you debug the application for that particular test input, and then you repeat the process. With <code>unittest</code>, all the test inputs can be provided at once and then you can test your appication. In the end you get a detailed report with all the failed test cases clearly specified, if any.
+
+The <code>unittest</code> module has a both a built-in <a href="https://smartbear.com/learn/automated-testing/test-automation-frameworks/">testing framework</a> and a <a href="https://www.quora.com/What-is-a-test-runner">test runner</a>. A testing framework is a set of rules which must be followed while writing test cases, while a test runner is a tool which executes these tests with a bunch of settings, and collects the results.
+
+Now, let's write some tests for our small software discussed above using the <code>unittest</code> module.
+<ol>
+	<li>Create a file named "tests.py".</li>
+	<li>In "tests.py" import <code>unittest</code>.</li>
+	<li>Create a class named <code>TestClass</code> which inherits from the class <code>unittest.TestCase</code>.
+		<strong>Rule 1:</strong> All the tests are written as the methods of a class, which must inherit from the class <code>unittest.TestCase</code>.</li>
+	<li>Create a test method as shown below.
+		<strong>Rule 3:</strong> Name of each and every test should start with "test" otherwise it'll be skipped.
+		<div class="noIdeBtnDiv">
+		[sourcecode language="Python3" highlight=""]
+		def test_area(self):
+			sq = Square(2)	# creates a Square of side 2 units.
+
+			# test if the area of the above square is 4 units, display an error message if it's not.
+			self.assertEqual(sq.area(), 4, f'Area is shown {sq.area()} rather than 9')
+		[/sourcecode]
+		</div>
+
+		Note: Do not forget to import the class <code>Square</code> in "test.py".
+
+		<strong>Rule 3:</strong> You use special <code>assertEqual()</code> statements instead of the built-in <code>assert</code> statements.
+
+		The first argument of <code>assertEqual()</code> is the actual output, the second argument is the desired output and the third argument is the error message which would be displayed in case the test fails.</li>
+	<li>To run the tests described in the test file "tests.py", we need to call the method <code>unittest.main()</code>, add the following code in the "tests.py" module.
+		<div class="noIdeBtnDiv">
+		[sourcecode language="Python3" highlight=""]
+		if __name__ == '__main__':
+			unittest.main()
+		[/sourcecode]
+		</div></li>
+</ol>
+
+Finally the "tests.py" module should resemble the code given below.
+<div class="noIdeBtnDiv">
+[sourcecode language="Python3" highlight=""]
+import unittest
+from app import Square
+
+class TestSum(unittest.TestCase):
+	def test_area(self):
+		sq = Square(2)
+		self.assertEqual(sq.area(), 4, f'Area is shown {sq.area()} rather than 9')
+
+if __name__ == '__main__':
+	unittest.main()
+[/sourcecode]
+</div>
+
+Having written our test cases let us now test our application for any bugs. To test your application you simply need to excute the test file "tests.py" using command prompt or any IDE of your choice. The output should be something like this.
+<pre>.
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+</pre>
+In the first line, a <code>.</code>(dot) represents a successful test while an 'F' would represent a failed test case.
+
+Let us add a few more tests in "tests.py" and retest our application.
+<div class="noIdeBtnDiv">
+[sourcecode language="Python3" highlight=""]
+import unittest
+from app import Square
+
+class TestSum(unittest.TestCase):
+	def test_area(self):
+		sq = Square(2)
+		self.assertEqual(sq.area(), 4, f'Area is shown {sq.area()} rather than 9')
+
+	def test_area_negative(self):
+		sq = Square(-3)
+		self.assertEqual(sq.area(), -1, f'Area is shown {sq.area()} rather than -1 for negative side length')
+
+	def test_perimeter(self):
+		sq = Square(5)
+		self.assertEqual(sq.perimeter(), 20, f'Perimeter is {sq.perimeter()} rather than 20')
+
+	def test_perimeter_negative(self):
+		sq = Square(-6)
+		self.assertEqual(sq.perimeter(), -1, f'Perimeter is {sq.perimeter()} rather than -1 for negative side length')
+
+if __name__ == '__main__':
+	unittest.main()
+[/sourcecode]
+</div>
+<pre>.F.F
+======================================================================
+FAIL: test_area_negative (__main__.TestSum)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;tests_unittest.py&quot;, line 11, in test_area_negative
+    self.assertEqual(sq.area(), -1, f&apos;Area is shown {sq.area()} rather than -1 for negative side length&apos;)
+AssertionError: 9 != -1 : Area is shown 9 rather than -1 for negative side length
+
+======================================================================
+FAIL: test_perimeter_negative (__main__.TestSum)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;tests_unittest.py&quot;, line 19, in test_perimeter_negative
+    self.assertEqual(sq.perimeter(), -1, f&apos;Perimeter is {sq.perimeter()} rather than -1 for negative side length&apos;)
+AssertionError: -24 != -1 : Perimeter is -24 rather than -1 for negative side length
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.001s
+
+FAILED (failures=2)</pre>
+A few things to note in the above test report are:
+<ul>
+	<li>The first line represents that test 1 and test 3 executed successfully while test 2 and test 4 failed</li>
+	<li>Each failed test case is described in the report, the first line of the description contains the name of the failed test case and the last line contains the error message we defined for that test case.</li>
+	<li>At the end of the report you can see the number of failed tests, if no test fails the report will end with <code>OK</code>
+	</li>
+</ul>
+
+Note: For further knowledge you can read the complete documentation of <a href="https://docs.python.org/2/library/unittest.html"><code>unittest</code></a>.
+
+<h3>The "nose2" module</h3>
+The purpose of <code>nose2</code> is to extend <code>unittest</code> to make testing easier. <code>nose2</code> is compatible with tests written using the <code>unittest</code> testing framework and can be used as a replacement of the <code>unittest</code> test runner.
+
+<strong>Installation:</strong> <code>nose2</code> can be installed from the python packaging index using the commnad,
+<pre>pip install nose2</pre>
+
+<strong>Use:</strong> Go to the project source directory and run <code>nose2</code> using the command,
+<pre>nose2</pre>
+All the python modules with name starting from "test" are considered as test files. On execution, <code>nose2</code> will look for test files in the sub-directories,
+<ul>
+	<li>which are python packages (contain "__init__.py").</li>
+	<li>whose name starts with "test" after being lowercased i.e. TestFiles, tests.</li>
+	<li>which are named either "src" or "lib".</li>
+</ul> 
+<code>nose2</code> first loads all the test files present in the project and then the testing begins. Thus, with <code>nose2</code> we can split our tests among various test files and execute them at once, which is very useful when dealing with large number of tests.
+
+Let us now learn about different customisation options provided by <code>nose2</code> which can help us 	during the testing process.
+<ol>
+	<li><strong>Changing the search directory</strong>
+	If we want to change the directory in which <code>nose2</code> searchs for test files, we can do that using the command line arguments <code>-s</code> or <code>--start-dir</code> as,
+	<pre>nose2 -s DIR_ADD DIR_NAME</pre>
+	here, <code>DIR_NAME</code> is the directory in which we want to search for the test files and, <code>DIR_ADD</code> is the address of the directory <code>DIR_NAME</code>.
+	This is extremely useful when you want to test only one feature of your application at a time.</li>
+
+	<li><strong>Running specific test cases</strong>
+		Using <code>nose2</code> we can also run specific test cases at a time by using the command line arguments <code>-s</code> and <code>--start-dir</code> as,
+		<pre>nose2 -s DIR_ADD DIR_NAME.TEST_FILE.TEST_CLASS.TEST_NAME</pre>
+		<ul>
+			<li>TEST_NAME: name of the test method.</li>
+			<li>TEST_CLASS: class in which the test method is defined.</li>
+			<li>TEST_FILE: name of the test file in which the test case is defined i.e. test.py.</li>
+			<li>DIR_NAME: directory in which the test file exists.</li>
+			<li>DIR_ADD: address of the parent directory of DIR_NAME.</li>
+		</ul>
+	</li>
+</ol>

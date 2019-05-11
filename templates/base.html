@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+</head>
+<body>
+<ul>
+    <li><a href="{% url 'home_url' %}">Home</a></li>
+    {% if user.is_superuser %}
+    <li><a href="{% url 'modify_articles_url' %}">Articles</a></li>
+    {% endif %}
+</ul>
+<hr>
+{% block content %}
+{% endblock %}
+</body>
+</html>

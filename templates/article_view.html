@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}
+{{article.title}}
+{% endblock %}
+
+{% block content %}
+<h1>{{article.title}}</h1>
+<img src="{{article.thumbnail.url}}"><br>
+
+Created by:
+{% for author in article.authors.all %}
+<a href="">{{author}}</a>,
+{% endfor %}<br>
+
+Related Tags:
+{% for tag in article.tags.all %}
+<a href="">{{tag}}</a>,
+{% endfor %}<br>
+
+$content
+
+{% endblock %}
