@@ -93,8 +93,23 @@ def mod_tags(request):
         if 'new' in request.POST.keys():
             form = forms.NewTagForm(request.POST)
             if form.is_valid():
-                form.save()
+                title = form.cleaned_data['title']
+                description = form.cleaned_data['description']
+                author = request.user
+
+                models.Tag.objects.create(title=title,
+                                          description=description,
+                                          author=author)
                 return redirect('modify_tags_url')
+
+            tags = models.Tag.objects.all()
+            new_form = forms.NewTagForm()
+            del_form = forms.DeleteTagForm()
+            return render(request, 'mod_tag.html',
+                          {'new_form': new_form,
+                           'del_form': del_form,
+                           'tags': tags,
+                           })
 
         elif 'del' in request.POST.keys():
             form = forms.DeleteTagForm()
@@ -106,3 +121,12 @@ def mod_tags(request):
                     models.Tag.objects.get(id=id_).delete()
 
                 return redirect('home_url')
+
+            tags = models.Tag.objects.all()
+            new_form = forms.NewTagForm()
+            del_form = forms.DeleteTagForm()
+            return render(request, 'mod_tag.html',
+                          {'new_form': new_form,
+                           'del_form': del_form,
+                           'tags': tags,
+                           })

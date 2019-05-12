@@ -14,6 +14,7 @@
     <li><a href="{% url 'login_url' %}">Login</a></li>
     <li><a href="{% url 'signup_url' %}">Signup</a></li>
     {% else %}
+    <li>Logged in as <strong>{{user}}</strong></li>
     <li><a href="{% url 'logout_url' %}">Logout</a></li>
     {% if user.is_superuser %}
     <li><a href="{% url 'modify_articles_url' %}">Articles</a></li>

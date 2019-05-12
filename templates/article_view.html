@@ -10,11 +10,15 @@
 Created by:
 {% for author in article.authors.all %}
 <a href="">{{author}}</a>,
+{% empty %}
+Unknown
 {% endfor %}<br>
 
 Related Tags:
 {% for tag in article.tags.all %}
-<a href="">{{tag}}</a>,
+<a href="{% url 'tag_url' tag.id %}">{{tag}}</a>,
+{% empty %}
+None
 {% endfor %}<br>
 
 $content
