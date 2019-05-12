@@ -5,9 +5,11 @@ Articles
 
 {% block content %}
 <h2>Articles</h2>
-{% for article in articles %}
-{{article.title}}
-{% endfor %}
+<ol>
+    {% for article in articles %}
+    <li><a href="{% url 'article_url' article.id %}">{{article.title}}</a></li>
+    {% endfor %}
+</ol>
 <h2>Create New Article</h2>
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}

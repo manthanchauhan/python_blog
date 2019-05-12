@@ -11,7 +11,7 @@ Home
         <th>Article Title</th>
         <th>Contributed by</th>
         <th>Related Tags</th>
-        <th>Date Created</th>
+        <th>Created On (UTC)</th>
     </tr>
     </thead>
     <tbody>
@@ -26,7 +26,7 @@ Home
             </td>
             <td>
                 {% for tag in article.tags.all %}
-                {{tag.title}},
+                <a href="{% url 'tag_url' tag.id %}">{{tag.title}}</a>,
                 {% endfor %}
             </td>
             <td>{{article.date_created}}</td>

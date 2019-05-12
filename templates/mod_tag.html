@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Tags
+{% endblock %}
+
+{% block content %}
+<h1>Tags</h1><br>
+<strong>All Tags: </strong><br>
+<ol>
+    {% for tag in tags %}
+    <li><a href="{% url 'tag_url' tag.id %}">{{tag.title}}</a></li>
+    {% endfor %}
+</ol>
+<strong>Create Tag: </strong><br>
+<form method="post">
+    {% csrf_token %}
+    {{new_form.as_p}}
+    <button type="submit" name="new">Create Tag</button>
+</form>
+<strong>Remove Tag: </strong><br>
+<form method="post">
+    {% csrf_token %}
+    {{del_form.as_p}}
+    <button type="submit" name="del">Remove Tag</button>
+</form>
+{% endblock %}

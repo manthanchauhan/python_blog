@@ -18,12 +18,19 @@ from django.contrib import admin
 from articles import views
 from django.conf.urls.static import static
 from django.conf import settings
+from django.contrib.auth import views as auth_views
+from accounts import views as account_views
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin_url'),
     path('modify_articles/', views.mod_articles, name='modify_articles_url'),
-    path('', views.home_view, name='home_url'),
     path('articles/<int:id_>/', views.article_view, name='article_url'),
+    path('tags/<int:id_>/', views.tag_view, name='tag_url'),
+    path('modify_tags/', views.mod_tags, name='modify_tags_url'),
+    path('', views.home_view, name='home_url'),
+    path('login/', auth_views.LoginView.as_view(), name='login_url'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout_url'),
+    path('signup/', account_views.signup, name='signup_url'),
 ]
 
 # links media files

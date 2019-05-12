@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from .models import Article
+from . import models
 from . import forms
 import os
-# from django.http import HttpResponse
+from django.conf import settings
+from django.contrib.auth.decorators import login_required
 
 
 def home_view(request):
@@ -38,14 +40,17 @@ def mod_articles(request):
                 ids = form['title']
 
                 for id_ in ids:
-                    Article.objects.get(id=id_).delete()
+                    article_ = Article.objects.get(id=id_)
+                    os.remove(os.path.join(settings.MEDIA_ROOT, str(article_.content)))
+                    os.remove(os.path.join(settings.MEDIA_ROOT, str(article_.thumbnail)))
+                    article_.delete()
                 return redirect('modify_articles_url')
 
 
+@login_required(login_url='login_url')
 def article_view(request, id_):
     article_ = Article.objects.get(id=id_)
 
-    from django.conf import settings
     from string import Template
 
     with open(os.path.join(settings.TEMPLATES[0]['DIRS'][0], 'article_view.html'), 'r') as file:
@@ -60,5 +65,44 @@ def article_view(request, id_):
 
     return render(request, 'temp_article.html',
                   {'article': article_,
-                   'user': request.user
                    })
+
+
+@login_required(login_url='login_url')
+def tag_view(request, id_):
+    tag = models.Tag.objects.get(id=id_)
+    return render(request, 'tag_view.html', {'tag': tag})
+
+
+def mod_tags(request):
+    if not request.user.is_superuser:
+        return redirect('home_url')
+
+    if request.method == 'GET':
+        tags = models.Tag.objects.all()
+        new_form = forms.NewTagForm()
+        del_form = forms.DeleteTagForm()
+
+        return render(request, 'mod_tag.html',
+                      {'new_form': new_form,
+                       'del_form': del_form,
+                       'tags': tags,
+                       })
+
+    elif request.method == 'POST':
+        if 'new' in request.POST.keys():
+            form = forms.NewTagForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('modify_tags_url')
+
+        elif 'del' in request.POST.keys():
+            form = forms.DeleteTagForm()
+            if form.is_valid():
+                form = form.cleaned_data
+                ids = form['title']
+
+                for id_ in ids:
+                    models.Tag.objects.get(id=id_).delete()
+
+                return redirect('home_url')

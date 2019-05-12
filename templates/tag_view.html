@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{tag.name}}
+{% endblock %}
+
+{% block content %}
+<h1>{{tag.title}}</h1>
+{{tag.description}}<br><br>
+<strong>Created By: </strong><a href="">{{tag.author}}</a><br><br>
+<strong>Tagged Articles: </strong><br>
+<ul>
+    {% for article in tag.articles_tagged.all %}
+    <li><a href="{% url 'article_url' article.id %}">{{article.title}}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}

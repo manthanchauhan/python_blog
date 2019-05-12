@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 from . import models
-import mock
+
 
 class HomeTests(TestCase):
     def test_home_status_code(self):
@@ -14,11 +14,47 @@ class HomeTests(TestCase):
         response = self.client.get(url, follow=True)
         self.assertEqual(response.status_code, 200, f'articles view fails')
 
-    def test_article_view_status_code(self):
+    def test_tags_status_code(self):
+        url = reverse('modify_tags_url')
+        response = self.client.get(url, follow=True)
+        self.assertEqual(response.status_code, 200, f'tags view fails')
 
-        self.assertEqual(len(models.Article.objects.all()), 0)
-        # article_ = models.Article.objects.all()[0]
-        # url = reverse('article_url', kwargs={'id_': article_.id})
-        # url = 'http://127.0.0.1:8000/articles/4/'
-        # response = self.client.get(url, follow=True)
-        # self.assertEqual(response.status_code, 200, f' view failed')
+    def test_signup_status_code(self):
+        url = reverse('signup_url')
+        response = self.client.get(url, follow=True)
+        self.assertEqual(response.status_code, 200, f'signup view fails')
+
+    def test_login_status_code(self):
+        url = reverse('login_url')
+        response = self.client.get(url, follow=True)
+        self.assertEqual(response.status_code, 200, f'login view fails')
+
+
+class ArticleTests(TestCase):
+    @staticmethod
+    def create_article():
+        new_article = models.Article.objects.create(title='test_title',
+                                                    description='test_article',
+                                                    content='tests/content.html',
+                                                    thumbnail='tests/thumbnail.jpeg')
+        return new_article
+
+    def test_article_view_status_code(self):
+        new_article = self.create_article()
+        url = reverse('article_url', kwargs={'id_': new_article.id})
+        response = self.client.get(url, follow=True)
+        self.assertEqual(response.status_code, 200, f' view failed')
+
+
+class TagTests(TestCase):
+    @staticmethod
+    def create_tag():
+        tag = models.Tag.objects.create(title='test',
+                                        description='test')
+        return tag
+
+    def test_tag_view_status_code(self):
+        tag = self.create_tag()
+        url = reverse('tag_url', kwargs={'id_': tag.id})
+        response = self.client.get(url, follow=True)
+        self.assertEqual(response.status_code, 200, f'tag view failed')

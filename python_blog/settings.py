@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+# from django.contrib.auth.models import User, models
+
+# User._meta.local_fields[4].__dict__['_unique'] = True
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -51,6 +54,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'python_blog.urls'
+AUTH_USER_EMAIL_UNIQUE = True
 
 TEMPLATES = [
     {
@@ -103,6 +107,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+LOGIN_REDIRECT_URL = 'home_url'
+LOGOUT_REDIRECT_URL = 'home_url'
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
