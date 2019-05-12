@@ -21,12 +21,16 @@ Home
             {{article.description}}</td>
             <td>
                 {% for author in article.authors.all %}
-                {{author}},
+                <a href="">{{author}}</a>,
+                {% empty %}
+                Unknown
                 {% endfor %}
             </td>
             <td>
                 {% for tag in article.tags.all %}
                 <a href="{% url 'tag_url' tag.id %}">{{tag.title}}</a>,
+                {% empty %}
+                None
                 {% endfor %}
             </td>
             <td>{{article.date_created}}</td>
