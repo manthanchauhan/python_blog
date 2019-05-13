@@ -5,6 +5,7 @@ from . import forms
 import os
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from boards import models as board_models
 
 
 def home_view(request):
@@ -30,7 +31,8 @@ def mod_articles(request):
         if 'new' in request.POST.keys():
             form = forms.NewArticleForm(request.POST, request.FILES)
             if form.is_valid():
-                form.save()
+                article_ = form.save()
+                board_models.Board.objects.create(article=article_)
                 return redirect('home_url')
 
         elif 'del' in request.POST.keys():

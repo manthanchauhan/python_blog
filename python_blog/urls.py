@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.auth import views as auth_views
 from accounts import views as account_views
+from boards import views as board_views
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin_url'),
@@ -31,6 +32,7 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(), name='login_url'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout_url'),
     path('signup/', account_views.signup, name='signup_url'),
+    path('board/<int:id_>/', board_views.board_view, name='board_url'),
 ]
 
 # links media files

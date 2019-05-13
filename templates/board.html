@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Discussion Boards
+{% endblock %}
+
+{% block content %}
+<h1>Discussion Board (<a href="{% url 'article_url' board.article.id %}">{{board.article}}</a>)</h1>
+Last updated at (UTC):
+{% if board.last_update is None %}
+Unavailable
+{% else %}
+{{board.last_update}}
+{% endif %}
+<h3>Create new post:</h3>
+{% if form.errors %}
+{% for field in form %}
+    {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+    {% endfor %}
+{% endfor %}
+{% endif %}
+<strong>({{request.user}})</strong>
+<form method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit" name="query">Post</button>
+</form>
+<hr><br>
+<ul>
+    {% for post in board.posts.all %}
+        {% if post.parent_post is None %}
+    <li>
+        <strong>{{post.author}}</strong> ({{post.created_on}}):<br>
+        <textarea cols="50">{{post.content}}</textarea><br>
+        {% if not post.author == request.user %}
+        <button type="submit" name="reply {{post.id}}">Reply</button>
+            <button type="submit" name="upvote">Upvote</button>
+        {% endif %}
+        <ul>
+            {% for sub_post in post.children.all %}
+            <li>
+                <strong>{{sub_post.author}}</strong> (replied on {{sub_post.created_on}}):<br>
+                <textarea cols="50">{{sub_post.content}}</textarea><br>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </li>
+    {% empty %}
+    No posts yet.
+    {% endfor %}
+</ul>
+{% endblock %}

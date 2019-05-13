@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class Tag(models.Model):
@@ -20,6 +21,8 @@ class Article(models.Model):
     thumbnail = models.ImageField(upload_to='uploaded_articles/')
 
     # if user is deleted author will be set as null
+    # rating = models.IntegerField(validators=[MaxValueValidator(5), MinValueValidator(0)],
+    #                              default=5)
     authors = models.ManyToManyField(User, related_name='articles_written')
     tags = models.ManyToManyField(Tag, related_name='articles_tagged')
     date_created = models.DateTimeField(auto_now_add=True,
