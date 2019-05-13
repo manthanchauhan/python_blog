@@ -33,6 +33,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout_url'),
     path('signup/', account_views.signup, name='signup_url'),
     path('board/<int:id_>/', board_views.board_view, name='board_url'),
+    path('post_reply/<int:id_>', board_views.reply_view, name='reply_url'),
 ]
 
 # links media files

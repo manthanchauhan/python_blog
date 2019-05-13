@@ -22,28 +22,48 @@ Unavailable
     {% endfor %}
 {% endfor %}
 {% endif %}
-<strong>({{request.user}})</strong>
+(posting as <strong>{{request.user}}</strong>)
 <form method="post">
     {% csrf_token %}
     {{form.as_p}}
     <button type="submit" name="query">Post</button>
 </form>
-<hr><br>
+<hr>
 <ul>
     {% for post in board.posts.all %}
         {% if post.parent_post is None %}
+    <br>
     <li>
         <strong>{{post.author}}</strong> ({{post.created_on}}):<br>
-        <textarea cols="50">{{post.content}}</textarea><br>
+<!--        <textarea cols="50">{{post.content}}</textarea><br>-->
+        <table border="1">
+            <tbody>
+            <tr>
+                <td>
+                    {{post.content}}
+                </td>
+            </tr>
+            </tbody>
+        </table>
         {% if not post.author == request.user %}
-        <button type="submit" name="reply {{post.id}}">Reply</button>
-            <button type="submit" name="upvote">Upvote</button>
+        <form method="post">{% csrf_token %}
+        <button type="submit" name="reply" value="{{post.id}}">Reply</button>
+<!--            <button type="submit" name="upvote" value="{{post.id}}">Upvote</button>-->
+        </form>
         {% endif %}
         <ul>
             {% for sub_post in post.children.all %}
             <li>
                 <strong>{{sub_post.author}}</strong> (replied on {{sub_post.created_on}}):<br>
-                <textarea cols="50">{{sub_post.content}}</textarea><br>
+                <table border="1">
+            <tbody>
+            <tr>
+                <td>
+                    {{sub_post.content}}
+                </td>
+            </tr>
+            </tbody>
+        </table>
             </li>
             {% endfor %}
         </ul>

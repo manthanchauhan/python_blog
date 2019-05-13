@@ -8,3 +8,11 @@ class PostForm(forms.ModelForm):
         fields = ['content']
         labels = {'content': 'Query',
                   }
+
+
+class ReplyForm(PostForm):
+    class Meta:
+        model = models.Post
+        fields = ['content']
+        labels = {'content': 'Comment',
+                  }

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Reply
+{% endblock %}
+
+{% block content %}
+Replying to <strong>{{post.author}}</strong> on:
+<table border="1">
+    <tbody>
+    <tr>
+        <td>
+            {{post.content}}
+        </td>
+    </tr>
+    </tbody>
+</table><br>
+<form method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}
