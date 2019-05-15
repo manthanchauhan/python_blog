@@ -28,9 +28,12 @@ def mod_articles(request):
                        })
 
     elif request.method == 'POST':
+        print(request.POST)
         if 'new' in request.POST.keys():
+            print(request.FILES)
             form = forms.NewArticleForm(request.POST, request.FILES)
             if form.is_valid():
+                # print(form.cleaned_data)
                 article_ = form.save()
                 board_models.Board.objects.create(article=article_)
                 return redirect('home_url')
@@ -59,8 +62,8 @@ def article_view(request, id_):
         template = file.read()
         template = Template(template)
 
-    with open(os.path.join(settings.MEDIA_ROOT, str(article_.content)), 'r') as content:
-        html = template.substitute(content=content.read())
+        with open(os.path.join(settings.MEDIA_ROOT, str(article_.content)), 'r') as content:
+            html = template.substitute(content=content.read())
 
     with open(os.path.join(settings.TEMPLATES[0]['DIRS'][0], 'temp_article.html'), 'w') as file:
         file.write(html)

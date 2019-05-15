@@ -1,6 +1,10 @@
 from django.test import TestCase
 from django.urls import reverse
 from . import models
+from . import forms
+from django.contrib.auth.models import User
+from django.conf import settings
+import os
 
 
 class HomeTests(TestCase):
@@ -19,16 +23,6 @@ class HomeTests(TestCase):
         response = self.client.get(url, follow=True)
         self.assertEqual(response.status_code, 200, f'tags view fails')
 
-    def test_signup_status_code(self):
-        url = reverse('signup_url')
-        response = self.client.get(url, follow=True)
-        self.assertEqual(response.status_code, 200, f'signup view fails')
-
-    def test_login_status_code(self):
-        url = reverse('login_url')
-        response = self.client.get(url, follow=True)
-        self.assertEqual(response.status_code, 200, f'login view fails')
-
 
 class ArticleTests(TestCase):
     @staticmethod
@@ -36,7 +30,8 @@ class ArticleTests(TestCase):
         new_article = models.Article.objects.create(title='test_title',
                                                     description='test_article',
                                                     content='tests/content.html',
-                                                    thumbnail='tests/thumbnail.jpeg')
+                                                    thumbnail='tests/thumbnail.jpeg',
+                                                    )
         return new_article
 
     def test_article_view_status_code(self):

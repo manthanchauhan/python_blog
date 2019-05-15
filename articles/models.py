@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class Tag(models.Model):
@@ -16,7 +15,7 @@ class Tag(models.Model):
 
 class Article(models.Model):
     title = models.CharField(max_length=50, unique=True)
-    description = models.CharField(max_length=200)
+    description = models.CharField(max_length=200, null=True)
     content = models.FileField(upload_to='uploaded_articles/', unique=True)
     thumbnail = models.ImageField(upload_to='uploaded_articles/')
 

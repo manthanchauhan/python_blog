@@ -73,6 +73,8 @@ TEMPLATES = [
     },
 ]
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 WSGI_APPLICATION = 'python_blog.wsgi.application'
 
 MEDIA_URL = '/media/'

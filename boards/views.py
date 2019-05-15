@@ -17,9 +17,10 @@ def board_view(request, id_):
     elif request.method == 'POST':
         # print(request.POST)
         if 'query' in request.POST.keys():
+            # print(request.POST)
             form = forms.PostForm(request.POST)
             print(request.POST)
-            print(form.errors)
+            # print(form.errors)
             if form.is_valid():
                 form = form.cleaned_data
                 content = form['content']
