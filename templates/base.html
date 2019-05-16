@@ -33,7 +33,7 @@
 
     {% else %}
     <li>Logged in as <strong>{{user}}</strong></li>
-    <li><a href="{% url 'password_reset_url' %}">Reset Password</a></li>
+    <li><a href="{% url 'password_reset' %}">Reset Password</a></li>
     {% url 'logout_url' as logout %}
     {% if request.path == logout %}
     <li>Logout</li>

@@ -36,7 +36,7 @@ class AccountTests(TestCase):
         self.assertEqual(response.context['user'].is_active, True, f'signup is not working')
 
 
-class PasswordRestTests(TestCase):
+class PasswordResetTests(TestCase):
     def setup(self):
         url = reverse('password_reset_url')
         self.response = self.client.get(url, follow=True)

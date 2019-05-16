@@ -14,7 +14,7 @@ Login
 </form><br>
 
 Don't have an account? Signup <a href="{% url 'signup_url' %}">here</a>.<br>
-<strong>Forgot password?</strong> Reset you password <a href="{% url 'password_reset_url' %}">here</a>.
+<strong>Forgot password?</strong> Reset you password <a href="{% url 'password_reset' %}">here</a>.
 {% else %}
 Error: You visited the wrong page.
 {% endif %}
