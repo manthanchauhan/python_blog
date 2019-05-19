@@ -42,6 +42,7 @@ urlpatterns = [
          name='password_reset_confirm'),
     path('reset_complete/', auth_views.PasswordResetCompleteView.as_view(),
          name='password_reset_complete'),
+    path('all_discussion_boards/', board_views.discussion_boards, name='boards')
 ]
 
 # links media files
