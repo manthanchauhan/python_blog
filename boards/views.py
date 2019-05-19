@@ -68,3 +68,8 @@ def reply_view(request, id_):
             return redirect(url)
 
         return redirect('home_url')
+
+
+def discussion_boards(request):
+    articles = models.Article.objects.all()
+    return render(request, 'discussion_boards.html', {'articles': articles  })

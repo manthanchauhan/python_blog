@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Discussion Boards
+{% endblock %}
+
+{% block content %}
+<h1>Discussion Boards</h1>
+<table border="2">
+    <thead>
+    <tr>
+        <th>
+            Board Title
+        </th>
+        <th>
+            Total Posts
+        </th>
+        <th>
+            Last Updated (UTC)
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for article in articles %}
+    <tr>
+        <td>
+            <a href="{% url 'board_url' article.discussion_board.id %}">{{article.title}}</a>
+        </td>
+        <td>
+            {{article.discussion_board.posts.all|length}}
+        </td>
+        <td>
+            {{article.discussion_board.last_update}}
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

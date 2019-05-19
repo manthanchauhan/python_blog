@@ -33,7 +33,20 @@
 
     {% else %}
     <li>Logged in as <strong>{{user}}</strong></li>
+    {% url 'boards' as boards %}
+    {% if request.path == boards %}
+    <li>Discussion Boards</li>
+    {% else %}
+    <li><a href="{% url 'boards' %}">Discussion Boards</a></li>
+    {% endif %}
+
+    {% url 'password_reset' as password %}
+    {% if request.path == password %}
+    <li>Reset Password</li>
+    {% else %}
     <li><a href="{% url 'password_reset' %}">Reset Password</a></li>
+    {% endif %}
+
     {% url 'logout_url' as logout %}
     {% if request.path == logout %}
     <li>Logout</li>
