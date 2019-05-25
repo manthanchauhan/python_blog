@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect, reverse
 from . import models
 from . import forms
-from django.views.decorators.csrf import csrf_protect
-from django.views.decorators.cache import never_cache
+from django.contrib.auth.decorators import login_required
 
 
-@csrf_protect
+@login_required(login_url='login_url')
 def board_view(request, id_):
     if request.method == 'GET':
         brd = models.Board.objects.get(id=id_)
@@ -42,7 +41,7 @@ def board_view(request, id_):
             return redirect('home_url')
 
 
-@never_cache
+@login_required(login_url='login_url')
 def reply_view(request, id_):
     if request.method == 'GET':
         post = models.Post.objects.get(id=id_)

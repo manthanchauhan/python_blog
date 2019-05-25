@@ -7,34 +7,55 @@ from django.contrib.auth.views import LoginView
 
 
 class ViewTests(TestCase):
-    @staticmethod
-    def create_board():
+    def setUp(self):
         art = Article.objects.create(title='test',
                                      description='test',
                                      content='tests/content.html',
                                      thumbnail='tests/thumbnail.jpeg'
                                      )
-        brd = models.Board.objects.create(article=art)
-        return brd
+        self.board = models.Board.objects.create(article=art)
+
+        self.user = User.objects.create_user(username='test_user',
+                                             password='fdklafdsfsdf')
+
+    def test_all_boards_view_status_code(self):
+        url = reverse('boards')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200, f'all boards list view failed')
+
+    def test_board_view_redirection(self):
+        url = reverse('board_url', kwargs={'id_': self.board.id})
+        response = self.client.get(url)
+        self.assertRedirects(response, f'{reverse("login_url")}?next={url}', status_code=302)
 
     def test_board_view_status_code(self):
-        brd = self.create_board()
-        url = reverse('board_url', kwargs={'id_': brd.id})
-        response = self.client.get(url, follow=True)
+        self.client.login(username='test_user', password='fdklafdsfsdf')
+        url = reverse('board_url', kwargs={'id_': self.board.id})
+        response = self.client.get(url)
         self.assertEqual(response.status_code, 200, f'board_view failed')
 
-    def test_signup_status_code(self):
-        url = reverse('signup_url')
-        response = self.client.get(url, follow=True)
-        self.assertEqual(response.status_code, 200, f'signup view fails')
+    def test_board_commenting(self):
+        url = reverse('board_url', kwargs={'id_': self.board.id})
+        self.client.post(url, {'query': 'test_comment'})
+        self.assertEqual(len(self.board.posts.all()), 1, f'post creation fails')
+
+    def test_post_reply_redirection(self):
+        post = models.Post.objects.create(content='hi',
+                                          board=self.board,
+                                          )
+
+        url = reverse('reply_url', kwargs={'id_': post.id})
+        response = self.client.get(url)
+        self.assertRedirects(response, f'{reverse("login_url")}?next={url}', status_code=302)
 
     def test_post_reply_status_code(self):
-        brd = self.create_board()
         post = models.Post.objects.create(content='hi',
-                                          board=brd,
+                                          board=self.board,
                                           )
+
+        self.client.login(username='test_user', password='fdklafdsfsdf')
         url = reverse('reply_url', kwargs={'id_': post.id})
-        response = self.client.get(url, follow=True)
+        response = self.client.get(url)
         self.assertEqual(response.status_code, 200, f'reply_view failed')
 
 
