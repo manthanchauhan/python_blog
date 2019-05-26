@@ -38,12 +38,16 @@ urlpatterns = [
     path('post_reply/<int:id_>', board_views.reply_view, name='reply_url'),
     path('password_reset/', auth_views.PasswordResetView.as_view(),
          name='password_reset'),
+
     path('password_reset_done/', auth_views.PasswordResetDoneView.as_view(),
          name='password_reset_done'),
-    path('reset/<uidb64>/<token>', auth_views.PasswordResetConfirmView.as_view(),
+
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(),
          name='password_reset_confirm'),
+
     path('reset_complete/', auth_views.PasswordResetCompleteView.as_view(),
          name='password_reset_complete'),
+
     path('all_discussion_boards/', board_views.discussion_boards, name='boards')
 ]
 
