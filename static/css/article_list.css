@@ -1,0 +1,110 @@
+#showcase{
+    display: flex;
+}
+.card-container{
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card{
+  flex-basis: 250px;
+  max-width: 300px; 
+  margin: 10px;
+  box-shadow: 0px 0px 5px rgba(0,0,0,0.1);
+    background-color: white;
+  display: flex;
+  flex-direction: column;  
+  transition: all 0.3s;    
+}
+
+
+.card:hover{
+    box-shadow: 0px 0px 25px rgba(0,0,0,0.2);
+    background-color: darkgray;
+}
+
+
+
+.card .card-img {
+    height: 200px;
+    overflow: hidden;
+    transform: scale(0.9);
+    transition: all 0.3s;
+}
+
+
+.card:hover .card-img{
+    transform: scale(1)
+}
+
+.card .card-img img{
+    height: 100%;
+    min-width: 100%;
+}
+
+.card ,card-title{
+    padding: 10px;
+}
+
+.card .card-des{
+    padding: 10px;
+    padding-top: 0px;
+    margin-top: 10px;
+
+}
+
+.card .call-to-action{
+    margin : 10px;
+    margin-top : auto;
+    align-self: flex-start;
+}
+
+
+
+
+
+
+.card .call-to-action a{
+    display: block;
+    padding: 10px 15px;
+    color: #fff;
+    background-color: #8e9ea1;
+    text-decoration: none;
+    transition: all 0.3s;
+    
+    
+}
+
+
+.card .call-to-action a:hover{
+    
+    border: 2px solid white;
+    
+}
+
+#showcase aside{
+    flex-basis: 500px;
+    background-color: white;
+    
+}
+
+#showcase aside ul{
+    list-style-type: none;
+}
+
+#showcase aside h3{
+    padding: 20px;
+}
+
+#showcase aside a{
+    display: block;
+    padding: 20px;
+    text-decoration: none;
+    color: black;
+    transition: all 0.3s;
+}
+
+#showcase aside a:hover{
+    background-color: rgba(0,0,0,0.1);
+}
