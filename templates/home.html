@@ -1,41 +1,451 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
+ 
+
 {% block title %}
-Home
+  Pythonic
 {% endblock %}
 
+{% block css %}
+ <link href="{%static 'css/home.css'%}" rel="stylesheet" type="text/css">
+{% endblock css %}
+
 {% block content %}
-<table border="2">
-    <thead>
-    <tr>
-        <th>Article Title</th>
-        <th>Contributed by</th>
-        <th>Related Tags</th>
-        <th>Created On (UTC)</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for article in articles %}
-        <tr>
-            <td><strong><a href="{% url 'article_url' article.id %}">{{article.title}}</a></strong><br>
-            {{article.description}}</td>
-            <td>
-                {% for author in article.authors.all %}
-                <a href="">{{author}}</a>,
-                {% empty %}
-                Unknown
-                {% endfor %}
-            </td>
-            <td>
-                {% for tag in article.tags.all %}
-                <a href="{% url 'tag_url' tag.id %}">{{tag.title}}</a>,
-                {% empty %}
-                None
-                {% endfor %}
-            </td>
-            <td>{{article.date_created}}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
-{% endblock %}
+
+ 
+
+  
+  
+  <!--==========================
+    Hero Section
+  ============================-->
+  <section id="hero">
+    <div class="hero-container">
+      <h1 class="welcome">Welcome to Pythonic</h1>
+      <h2 class="tag">
+A blogging website, meant to be used to share blog related to the Python programming language.</h2>
+      <a href="#about" class="btn-get-started">Visit Our Blog</a>
+    </div>
+  </section><!-- #hero -->
+ 
+  
+  <main id="main">
+
+    <!--==========================
+      About Us Section
+    ============================-->
+    <section id="about">
+      <div class="container">
+        <div class="row about-container">
+
+          <div class="col-lg-6 content order-lg-1 order-2">
+            <h2 class="title">Few Words About Me</h2>
+            <p>
+              I write articles about Python on this beautiful website as a hobby, and I hope we'll see you often.
+            </p>
+
+            <div class="icon-box wow fadeInUp">
+              <div class="icon"><i class="fas fa-graduation-cap"></i></div>
+              <h4 class="title"><a href="">Education</a></h4>
+              <p class="description">I am an undergraduate persuing my major in Electronics & Communication. </p>
+            </div>
+
+            <div class="icon-box wow fadeInUp" data-wow-delay="0.2s">
+              <div class="icon"><i class="fab fa-python"></i></div>
+              <h4 class="title"><a href="">Programming</a></h4>
+              <p class="description"> I started programming as a fun activity while participating in programming events on websites like Codechef</p>
+            </div>
+
+            <div class="icon-box wow fadeInUp" data-wow-delay="0.4s">
+              <div class="icon"><i class="fas fa-laptop-code"></i></div>
+              <h4 class="title"><a href="">Work</a></h4>
+              <p class="description"> I have made many projects using Python, C, C++, Django and etc.</p>
+            </div>
+
+          </div>
+
+          <div class="col-lg-6 background order-lg-2 order-1 wow fadeInRight"></div>
+        </div>
+
+      </div>
+    </section><!-- #about -->
+
+    <!--==========================
+      Facts Section
+    ============================-->
+    <section id="facts">
+      <div class="container wow fadeIn">
+        <div class="section-header">
+          <h3 class="section-title">Facts</h3>
+          <p class="section-description">Below Are Some Facts Related To Python Programming Language</p>
+        </div>
+        <div class="row counters">
+
+  				<div class="col-lg-3 col-6 text-center">
+            <span data-toggle="counter-up">2008</span>
+            <p>Released In</p>
+  				</div>
+
+          <div class="col-lg-3 col-6 text-center">
+            <span data-toggle="counter-up">43</span>
+            <p>Million Users WorldWide</p>
+  				</div>
+
+          <div class="col-lg-3 col-6 text-center">
+            <span data-toggle="counter-up">1,463</span>
+            <p>Hours Of Support</p>
+  				</div>
+
+          <div class="col-lg-3 col-6 text-center">
+            <span data-toggle="counter-up">15</span>
+            <p>Hard Workers</p>
+  				</div>
+
+  			</div>
+
+      </div>
+    </section><!-- #facts -->
+
+    <!--==========================
+      Key Features
+    ============================-->
+    <section id="key">
+      <div class="container wow fadeIn">
+        <div class="section-header">
+          <h3 class="section-title">Key Features</h3>
+          <p class="section-description">Pythonic Has The Following Features & Technology Involved</p>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
+            <div class="box">
+              <div class="icon"><a><i class="fab fa-python"></i></a></div>
+              <h4 class="title"><a href="">Django</a></h4>
+              <p class="description">The Backend of Pythonic is completely coded in Python using the Django - Web Framework for python</p>
+            </div>
+          </div>
+          
+           <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.4s">
+            <div class="box">
+              <div class="icon"><a href=""><i class="fas fa-gem"></i></a></div>
+              <h4 class="title"><a href="">Responsive</a></h4>
+              <p class="description"> Responsive web design approach is used that makes Pythonic render well on a variety of devices and window or screen sizes</p>
+            </div>
+          </div>
+          
+          <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.4s">
+            <div class="box">
+              <div class="icon"><a href=""><i class="fab fa-html5"></i></a></div>
+              <h4 class="title"><a href="">HTML5</a></h4>
+              <p class="description">HTML5  defines the properties and behaviors of Pythonic by implementing a markup based pattern to it. </p>
+            </div>
+          </div>
+          
+          <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.6s">
+            <div class="box">
+              <div class="icon"><a href=""><i class="fab fa-css3"></i></a></div>
+              <h4 class="title"><a href="">CSS3</a></h4>
+              <p class="description">CSS3 defines the Styling and Animation of the content of Pythonic</p>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
+            <div class="box">
+              <div class="icon"><a href=""><i class="fab fa-js"></i></a></div>
+              <h4 class="title"><a href="">Java Script</a></h4>
+              <p class="description">Latest ES6 version of JavaScript defines the Dynamic Nature of Pythonic</p>
+            </div>
+          </div>
+         
+          <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.6s">
+            <div class="box">
+              <div class="icon"><a href=""><i class="fab fa-bootstrap"></i></a></div>
+              <h4 class="title"><a href="">Bootstrap</a></h4>
+              <p class="description">World's most popular front-end component library BOOTSTRAP </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- #services -->
+
+     
+    <!--==========================
+      Team Section
+    ============================-->
+    
+   <section id="team">
+      <div class="container wow fadeInUp">
+        <div class="section-header">
+          <h3 class="section-title">Team</h3>
+          <p class="section-description"> This is our Awsome Team </p>
+        </div>
+        
+        
+        
+        
+        
+         <div class="row justify-content-end">
+       
+        <div class="col-sm-10 col-sm-offset-1">
+         <div class="col-lg-5 col-md-8">
+             <div class="card-container">
+                <div class="card">
+                    <div class="front">
+                        <div class="cover" style="background-color:  #51d8ad">
+                             
+                        </div>
+                        <div class="user">
+                            <img class="img-circle" src= "{% static './img/Manthan.PNG'%}"/>
+                        </div>
+                        <div class="content">
+                            <div class="main">
+                                <h3 class="name" style="color: #2dca98">MANTHAN CHAUHAN</h3>
+                                <p class="profession">Founder</p>
+                                <p class="text-center" style="color:grey">"I'm the new Sinatra, and since I made it here I can make it anywhere, yeah, they love me everywhere"</p>
+                            </div>
+                            <div class="footer" style="color: #2dca98">
+                             Back-End Develepor
+                            </div>
+                        </div>
+                    </div> <!-- end front panel -->
+                    <div class="back">
+                        <div class="header">
+                            <h5 class="motto" style="color: #2dca98">"To be or not to be, this is my awesome motto!"</h5>
+                        </div>
+                        <div class="content">
+                            <div class="main">
+                                <h3 class="text-center" style="color: #2dca98"> SKILLS </h3>
+                                <p class="text-center">Web design, Adobe Photoshop, HTML5, CSS3, Corel and many others...</p>
+
+                                <div class="stats-container">
+                                    <div class="stats">
+                                        <h4>235</h4>
+                                        <strong style="color: #2dca98">
+                                            Followers
+                                        </strong>
+                                    </div>
+                                    <div class="stats">
+                                        <h4>114</h4>
+                                        <strong style="color: #2dca98">
+                                            Following
+                                        </strong>
+                                    </div>
+                                    <div class="stats">
+                                        <h4>35</h4>
+                                        <strong style="color: #2dca98">
+                                            Projects
+                                        </strong>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="footer">
+                             <div class="social-links text-center">
+                                <a href="https://www.facebook.com/profile.php?id=100009622096916" class="facebook"><i class="fab fa-facebook fa-fw"></i></a>
+                                <a href="https://github.com/snitin315" class="github"><i class="fab fa-github"></i></a>
+                                <a href="https://www.instagram.com/snitin315/" class="insta"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div> <!-- end back panel -->
+                </div> <!-- end card -->
+            </div> <!-- end card-container -->
+        </div> <!-- end col sm 3 -->
+<!--         <div class="col-sm-1"></div> -->
+       
+<!--         <div class="col-sm-1"></div> -->
+       
+       
+        
+       
+       
+        <div class="col-lg-5 col-md-10">
+            <div class="card-container" id="color">
+                <div class="card">
+                    <div class="front">
+                        <div class="cover" style="background-color:  #51d8ad">
+                          
+                        </div>
+                        <div class="user">
+                            <img class="img-circle" src="{% static './img/NItin.PNG'%}" />   
+                        </div>
+                        <div class="content">
+                            <div class="main">
+                                <h3 class="name" style="color: #2dca98" >NITIN KUMAR</h3>
+                                <p class="profession">Contributor</p>
+
+                                <p class="text-center">"I am an undergraduate persuing my major in Electronics & Communication"</p>
+                            </div>
+                            <div class="footer">
+                                <div class="rating" style="color: #2dca98">
+                                    Front-End Develepor
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- end front panel -->
+                    <div class="back">
+                        <div class="header">
+                            <h5 class="motto" style="color: #2dca98">"To be or not to be, this is my awesome motto!"</h5>
+                        </div>
+                        <div class="content">
+                            <div class="main">
+                                 <h3 class="text-center" style="color: #2dca98"> SKILLS </h3>
+                                <p class="text-center">HTML5,CSS3,JS,React.js,Angular,Node.js,Django,Python,IoT... & many others</p>
+
+                                <div class="stats-container">
+                                    <div class="stats">
+                                        <h4>267</h4>
+                                        <strong style="color: #2dca98">
+                                            Followers
+                                        </strong>
+                                    </div>
+                                    <div class="stats">
+                                        <h4 style="color: black">114</h4>
+                                        <strong style="color: #2dca98">
+                                            Following
+                                        </strong>
+                                    </div>
+                                    <div class="stats">
+                                        <h4>24</h4>
+                                        <strong style="color: #2dca98">
+                                            Projects
+                                        </strong>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <div class="social-links text-center">
+                                <a href="https://www.facebook.com/profile.php?id=100009622096916" class="facebook"><i class="fab fa-facebook fa-fw"></i></a>
+                                <a href="https://github.com/snitin315" class="github"><i class="fab fa-github"></i></a>
+                                <a href="https://www.instagram.com/snitin315/" class="insta"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div> <!-- end back panel -->
+                </div> <!-- end card -->
+            </div> <!-- end card-container -->
+        </div> <!-- end col-sm-3 -->
+      </div> <!-- end col-sm-10 -->
+    </div> <!-- end row -->
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+   
+       </div>
+      </section>   
+    <!--==========================
+      Contact Section
+    ============================-->
+    <section id="contact">
+      <div class="container wow fadeInUp">
+        <div class="section-header">
+          <h3 class="section-title">Contact</h3>
+          <p class="section-description">For Any query Feel Free To Contact Us</p>
+        </div>
+      </div>
+
+      <!-- Uncomment below if you wan to use dynamic maps -->
+ <iframe width="100%" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=Maharaja%20Agrasen%20institue%20of%20Technology&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe> 
+     
+      <div class="container wow fadeInUp mt-5">
+        <div class="row justify-content-center">
+
+          <div class="col-lg-3 col-md-4">
+
+            <div class="info">
+              <div>
+                <i class="fa fa-map-marker"></i>
+                <p>Maharaja Agrasen Institue of Technology<br>Rohini, ND-110086</p>
+              </div>
+
+              <div>
+                <i class="fa fa-envelope"></i>
+                <p>pythonic@gmail.com</p>
+              </div>
+
+              <div>
+                <i class="fa fa-phone"></i>
+                <p>+91 1234567890</p>
+              </div>
+            </div>
+
+            <div class="social-links">
+              <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
+              <a href="#" class="facebook"><i class="fab fa-facebook"></i></a>
+              <a href="#" class="instagram"><i class="fab fa-instagram"></i></a>
+              <a href="#" class="google-plus"><i class="fab fa-google-plus"></i></a>
+              <a href="#" class="linkedin"><i class="fab fa-linkedin"></i></a>
+            </div>
+
+          </div>
+
+          <div class="col-lg-5 col-md-8">
+            <div class="form">
+              <div id="sendmessage">Your message has been sent. Thank you!</div>
+              <div id="errormessage"></div>
+              <form action="" method="post" role="form" class="contactForm">
+                <div class="form-group">
+                  <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                  <div class="validation"></div>
+                </div>
+                <div class="form-group">
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
+                  <div class="validation"></div>
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
+                  <div class="validation"></div>
+                </div>
+                <div class="form-group">
+                  <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
+                  <div class="validation"></div>
+                </div>
+                <div class="text-center"><button type="submit">Send Message</button></div>
+              </form>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- #contact -->
+
+  </main>
+
+  <!--==========================
+    Footer
+  ============================-->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong>Pythonic</strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        
+       Made with &hearts; for a Better Web <br>
+       Designed by Nitin Kumar
+      </div>
+    </div>
+  </footer><!-- #footer -->
+
+  <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+
+{% endblock content %}
