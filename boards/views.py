@@ -1,16 +1,19 @@
 from django.shortcuts import render, redirect, reverse
+from django.contrib.auth.decorators import login_required
 from . import models
 from . import forms
-from django.contrib.auth.decorators import login_required
 
 
 @login_required(login_url='login_url')
 def board_view(request, id_):
     if request.method == 'GET':
         brd = models.Board.objects.get(id=id_)
+        posts = brd.posts.all()
+        posts = sorted(posts, key=lambda x: x.created_on, reverse=True)
         form = forms.PostForm()
         context = {}
         return render(request, 'board.html', {'board': brd,
+                                              'posts': posts,
                                               'form': form}, context)
 
     elif request.method == 'POST':

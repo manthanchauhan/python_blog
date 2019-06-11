@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'articles',
     'boards',
+    'django_summernote',
+    'markdown',
 ]
 
 MIDDLEWARE = [
@@ -118,7 +120,7 @@ LOGOUT_REDIRECT_URL = 'home_url'
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 

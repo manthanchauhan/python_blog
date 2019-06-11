@@ -1,6 +1,8 @@
 from django.db import models
 from articles.models import Article
 from django.contrib.auth.models import User
+from django.utils.html import mark_safe
+from markdown import markdown
 
 
 class Board(models.Model):
@@ -15,4 +17,6 @@ class Post(models.Model):
     parent_post = models.ForeignKey('self', on_delete=models.CASCADE, related_name='children',
                                     default=None, null=True)
     created_on = models.DateTimeField(auto_now_add=True)
-# Create your models here.
+
+    def get_markdown(self):
+        return mark_safe(markdown(self.content, safe_mode='escape'))

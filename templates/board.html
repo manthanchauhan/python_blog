@@ -30,7 +30,7 @@ Unavailable
 </form>
 <hr>
 <ul>
-    {% for post in board.posts.all %}
+    {% for post in posts %}
         {% if post.parent_post is None %}
     <br>
     <li>
@@ -40,7 +40,7 @@ Unavailable
             <tbody>
             <tr>
                 <td>
-                    {{post.content}}
+                    {{post.get_markdown}}
                 </td>
             </tr>
             </tbody>
@@ -59,7 +59,7 @@ Unavailable
             <tbody>
             <tr>
                 <td>
-                    {{sub_post.content}}
+                    {{sub_post.get_markdown}}
                 </td>
             </tr>
             </tbody>
