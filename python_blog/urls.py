@@ -24,6 +24,7 @@ from boards import views as board_views
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin_url'),
+    path('blog/',views.articles_list_view),
     path('modify_articles/', views.mod_articles, name='modify_articles_url'),
     path('articles/<int:id_>/', views.article_view, name='article_url'),
     path('tags/<int:id_>/', views.tag_view, name='tag_url'),

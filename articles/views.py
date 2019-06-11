@@ -9,8 +9,16 @@ from boards import models as board_models
 
 
 def home_view(request):
+
+    return render(request, 'home.html')
+
+
+def articles_list_view(request) :
+    #list out objects all articles 
     all_articles = Article.objects.all()
-    return render(request, 'home.html', {'articles': all_articles})
+    template_name = 'article_list.html'
+    context = {"articles": all_articles}
+    return   render(request, template_name, context)    
 
 
 def mod_articles(request):

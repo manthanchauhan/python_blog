@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+     
+{% load static %}     
+
+
+{% block title %}
+
+Blog
+ 
+{% endblock title %}
+
+
+{% block css %}
+
+  <link href="{%static 'css/article_list.css'%}" rel="stylesheet" type="text/css">
+ 
+{% endblock css %}
+
+{% block content %}
+
+ 
+           
+     <!--==========================
+    Hero Section
+  ============================-->
+  <section id="hero">
+    <div class="hero-container">
+      <h1 class="welcome">BLOG</h1>
+      
+      <h2 class="tag"> By Python For Python </h2>
+      
+    </div>
+  </section><!-- #hero -->
+
+
+   
+
+
+
+
+
+    <div class="container">
+        <div class="row">
+            {% for article in articles %}
+                <div class="col-12 col-md-6 col-lg-4 px-4 wow fadeInUp">
+                    <div class="card">
+                        <figure>
+
+                            <img class="cover" src= "{% static './img/Manthan.PNG'%}">
+                        
+                        </figure>
+                        <div class="card-body">
+                            <h5 class="text-center">{{article.title}}</h5>
+                            <span class="date">Posted: {{article.date_created}}</span><br>
+                            <span class="author"> Author : {{article.author}} </span>
+                            <p class="content">Apparently he atmosphere, for the sky was a dead black, and the stars had ceased to twinkle. By the same illusion which lifts the horizon of the sea to the level of the spectator on a hillside, the sable cloud beneath was.</p>
+                        </div>
+                        
+                        <div class="call-to-action">
+                            <a href="#">Read More</a>
+                        </div> 
+                    </div>
+                </div>
+            {% endfor %}
+             
+        </div> <!-- End Row -->
+    </div>
+
+
+
+
+ 
+  <!--==========================
+    Footer
+  ============================-->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong>Pythonic</strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        
+       Made with &hearts; for a Better Web <br>
+       Designed by Nitin Kumar
+      </div>
+    </div>
+  </footer><!-- #footer -->
+
+
+
+
+{% endblock content %}
