@@ -13,7 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.urls import path
+from django.urls import path, include
 from django.contrib import admin
 from articles import views
 from django.conf.urls.static import static
@@ -48,7 +48,8 @@ urlpatterns = [
     path('reset_complete/', auth_views.PasswordResetCompleteView.as_view(),
          name='password_reset_complete'),
 
-    path('all_discussion_boards/', board_views.discussion_boards, name='boards')
+    path('all_discussion_boards/', board_views.discussion_boards, name='boards'),
+    path('summernote/', include('django_summernote.urls'))
 ]
 
 # links media files
