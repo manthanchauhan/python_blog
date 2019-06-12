@@ -23,11 +23,11 @@ Blog
      <!--==========================
     Hero Section
   ============================-->
-  <section id="hero">
+  <section id="hero" >
     <div class="hero-container">
       <h1 class="welcome">BLOG</h1>
       
-      <h2 class="tag"> By Python For Python </h2>
+      <h2 class="tag"> Welcome to Our Blog , "By Python For Python" </h2>
       
     </div>
   </section><!-- #hero -->
@@ -52,12 +52,14 @@ Blog
                         <div class="card-body">
                             <h5 class="text-center">{{article.title}}</h5>
                             <span class="date">Posted: {{article.date_created}}</span><br>
-                            <span class="author"> Author : {{article.author}} </span>
-                            <p class="content">Apparently he atmosphere, for the sky was a dead black, and the stars had ceased to twinkle. By the same illusion which lifts the horizon of the sea to the level of the spectator on a hillside, the sable cloud beneath was.</p>
+                            {% for author in article.authors.all %}
+                            <span class="author"> Author : {{author}} </span>
+                            {% endfor %}
+                            <p class="content">{{article.description}}</p>
                         </div>
                         
                         <div class="call-to-action">
-                            <a href="#">Read More</a>
+                            <a href="/articles/{{article.id}}">Read More</a>
                         </div> 
                     </div>
                 </div>
@@ -67,7 +69,7 @@ Blog
     </div>
 
 
-
+  <br>
 
  
   <!--==========================

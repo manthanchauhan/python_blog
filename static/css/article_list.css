@@ -154,19 +154,18 @@
 .card{
    
     max-width: 400px; 
-    max-height: 900px;
+    height: 600px;
     margin: 10px;
-    border: 1px solid #e6e6e6;
-    box-shadow: 5px 10px #bdbdbd; 
-    border-radius: 25px;      
+    border: 1px solid #e6e6e6; 
+    border-radius: 10px;      
     position: relative;
     background: #fafafa;
     transition: all 0.3s;    
   }
 
 .card:hover{
-    box-shadow: 15px,25px #bdbdbd;
-    border : 2px solid #2dc997;
+     
+   border : 3px solid #2dc997;
    background-color: rgba(0, 0, 0, 0.1); 
     
 }  
