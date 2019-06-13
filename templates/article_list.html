@@ -42,28 +42,33 @@ Blog
     <div class="container">
         <div class="row">
             {% for article in articles %}
-                <div class="col-12 col-md-6 col-lg-4 px-4 wow fadeInUp">
-                    <div class="card">
-                        <figure>
+                      <div class=" col-lg-4 px-4 wow fadeInUp">
+                          <div class="card">
+                              <figure>
 
-                            <img class="cover" src= "{% static './img/Manthan.PNG'%}">
-                        
-                        </figure>
-                        <div class="card-body">
-                            <h5 class="text-center">{{article.title}}</h5>
-                            <span class="date">Posted: {{article.date_created}}</span><br>
-                            {% for author in article.authors.all %}
-                            <span class="author"> Author : {{author}} </span>
-                            {% endfor %}
-                            <p class="content">{{article.description}}</p>
-                        </div>
-                        
-                        <div class="call-to-action">
-                            <a href="/articles/{{article.id}}">Read More</a>
-                        </div> 
-                    </div>
-                </div>
-            {% endfor %}
+                                <img class="cover" src= "{% static './img/Manthan.PNG'%}">
+                              
+                              </figure>
+                              <br>
+                              <div class="post-meta d-flex justify-content-between" id="post-haeder">
+                                {% for author in article.authors.all  %}
+                                  <strong class="author">|Author: {{author}} </strong>
+                                {% endfor %} 
+                                <strong class="date"><i class="far fa-clock"></i> {{article.date_created}} </strong>
+                              
+                              </div>
+                              <div class="card-body">
+                                <h5 class="text-center">{{article.title}}</h5 
+                                <p class="content">{{article.description}}</p>
+                              </div>
+                              
+                              <div class="call-to-action">
+                                  <a href="{% url 'article_url' article.id %}" >Read More</a>
+                              </div> 
+                              
+                          </div>
+                      </div>
+               {% endfor %}
              
         </div> <!-- End Row -->
     </div>
