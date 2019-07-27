@@ -56,37 +56,228 @@
     <div class="col-lg-12">
      <div class="post">
 
-      <p>Prerequisites: Inheritance, function overriding If you have any experience of object-oriented programming you must be familiar with the concepts of inheritance(Single and Multiple) and function overriding. At a fairly abstract level, super() provides you the access to those methods of the super-class (parent class) which have been overridden in a sub-class (child class) that inherits from it. Consider the code example given below, here we have a class named Square and an another class named Cube which inherits the class Square.</p>
-[sourcecode language="Python3" highlight=""] class Square: def __init__(self, side): self.side = side def area(self): return self.side * self.side class Cube(Square): def area(self): face_area = self.side * self.side return face_area * 6 def volume(self): face_area = self.side * self.side return face_area * self.side [/sourcecode]
-Note: Since Cube does not have an .__init__() method, the .__init__() of Square will be used for initialization of Cube instances (basic property of inheritance). Considering this example, we know that each face of a cube is a square and hence, face_area of Cube represents area of a Square. Now, it makes sense to evaluate face_area using .area() method of the class Square rather than calculating it manually, not only this will save us from rewriting the code but also it will allow us to change the .area() logic from one place. But as we have overridden the .area() method in Cube, we cannot call .area() method of Square using self.area(). Now this is a situation where super() comes in rescue. super() returns a proxy object of the parent class and then you call the method of your choice on that proxy object, thus, we can call the .area() method of Square using super() as, super().area(). Here follows a modified definition of the class Cube.
-[sourcecode language="Python3" highlight=""] class Cube(Square): def area(self): return super().area() * 6 def volume(self): return super().area() * self.side() [/sourcecode]
-Do note that we could have called the .area() of Square method as Square.area() rather than super().area() but the latter maker is easier to swap out the super-class or rename it when required, making the code much easier to maintain.
-Passing arguments in super()
-In the previous section we discussed how to use super() without any parameters, but that only provides us access to the methods of that super-class which is the immediate parent of the sub-class. To access the methods of that super-class which is not an immediate parent of the sub-class, we use super() with two arguments. Lets us consider an example of three classes named Square, SquarePrism and Cube to understand how to use super() with arguments. Now, a cube is just a special type of square prism whose height is equal to the side of it's base, and hence a Cube resembles a SquarePrism much more than it resembles a Square. Therefore, in this example the class Cube will inherit the class SquarePrism, and the class SquarePrism will inherit the class Square. For class Square we'll use the same definition we used in the previous section. Given below is the definition of our newly defined class, SquarePrism.
-[sourcecode language="Python3" highlight=""] class SquarePrism(Square): def __init__(self, side, height): self.side = side self.height = height def face_area(self): base_area = super().area() lateral_area = self.side * self.height return base_area, lateral_area def area(self): base_area = super().area() lateral_area = self.side * self.height return 2 * base_area + 4 * lateral_area [/sourcecode]
-A SquarePrism instance has two attributes, the side of it's square base and the height of the square prism. The instance method face_area() returns a tuple of two numbers representing the base area of the square prism and the lateral area of the square prism. Since the base is a square, for base area of the square prism we call the method Square.area() as super().area(). The .area() method returns the total surface area of the square prism. Until now we have use super() without any parameters, now follows the definition of the new class Cube which will demonstrate the use of super() with parameters.
-[sourcecode language="Python3" highlight=""] class Cube(SquarePrism): def __init__(self, side) super().__init__(side=side, height=side) def face_area(self): return super(SquarePrism, self).area() def area(self): return super().area() [/sourcecode]
-Unlike the methods .__init__() and .area() the .face_area() method of Cube is somewhat different from its counter-part SquarePrism.face_area(). For a cube the lateral area is equal to the base area and hence it is not meaningful for the .face_area() method to return a tuple, therefore, the .face_area() of the class Cube will return the area of one of the cube faces. Now, since each face of the cube is a square, it is again meaningful to use the .area() method of the class Square. Now, since the class Square is not an immediate parent of the class Cube, we cannot access the .area() method of the class Square as super().area() as it will call the method SquarePrism.area() instead. Here we use super(SquarePrism, self).face_area() to call the .area() method of the class Square, in the first argument, SquarePrism signifies that super() searches for the .area() method in the immediate parent of the class SquarePrism, that is in the class Square. The use of self as the second parameter provides the context of the current Cube object to super() for the requested .area() method to act upon. Remember that, to use super() in two argument form, it is necessary that the object passed as the second argument is an instance of the type passed as first argument. Note: Since the class Cube is a child of the class SquarePrism, a Cube instance is also an instance of the class SquarePrism and the class Square. Try the following code snippet and observe the output for the clarification of the above point. [sourcecode language="Python3" highlight=""] class Square: def __init__(self): pass class SquarePrism(Square): def __init__(self): pass class Cube(SquarePrism): def __init__(self): pass square = Square() squareprism = SquarePrism() cube = Cube() print(isinstance(squareprism, Square)) print(isinstance(cube, Square)) [/sourcecode] It is worthwhile to note that the zero argument form of super() can only be used inside a class definition as it is auto-filled by the compiler with the appropriate paremeters, i.e. if you use super() inside a class say X, super() will be converted into super(X, self) by the compiler. While the zero argument form of super() is popular among developers the two argument form might not seem to be of much use for now. But in multiple inheritance, the two argument form plays a very important role.
+      <p>
+Software testing is the process in which a developer ensures that the actual output of the software matches with the desired output by providing some test inputs to the software. Software testing is an important step because if performed properly, it can help the developer to find the <a href="https://en.wikipedia.org/wiki/Software_bug">bugs</a> in the software in very less amount of time.</p>
+
+<p>
+Software testing can be divided into two classes, <strong>Mannual testing</strong> and <strong>Automated testing</strong>. Automated testing is the execution of your tests using a script instead of a human. In this article we'll discuss about automated software testing only.</p> 
+
+<p>Now we'll explore some python tools to create automated tests for your application, but before that let us write a simple application over which we will perform all the tests.</p>
+[sourcecode language="Python3" highlight=""]
+class Square:
+	def __init__(self, side):
+		""" creates a square having the given side
+		"""
+		self.side = side
+
+	def area(self):
+		""" returns area of the square
+		"""
+		return self.side**2
+
+	def perimeter(self):
+		""" returns perimeter of the square
+		"""
+		return 4 * self.side
+
+	def __repr__(self):
+		""" declares how a Square object should be printed
+		"""
+		s = 'Square with side = ' + str(self.side) + '\n' + \
+		'Area = ' + str(self.area()) + '\n' + \
+		'Perimeter = ' + str(self.perimeter())
+		return s
+
+
+if __name__ == '__main__':
+	# read input from the user
+	side = int(input('enter the side length to create a Square: '))
+	
+	# create a square with the provided side
+	square = Square(side)
+
+	# print the created square
+	print(square)
+[/sourcecode]
+
+<p>Now that we have our software ready, let us debug it using various testing tools provided for python.</p>
+
+<h3>The 'unittest' module</h3>
+One of the major problems with mannual testing is that, it requires time and effort. In mannual testing, you test your application over some input, if it fails, either you note it down or you debug the application for that particular test input, and then you repeat the process. With <code>unittest</code>, all the test inputs can be provided at once and then you can test your appication. In the end you get a detailed report with all the failed test cases clearly specified, if any.
+
+The <code>unittest</code> module has a both a built-in <a href="https://smartbear.com/learn/automated-testing/test-automation-frameworks/">testing framework</a> and a <a href="https://www.quora.com/What-is-a-test-runner">test runner</a>. A testing framework is a set of rules which must be followed while writing test cases, while a test runner is a tool which executes these tests with a bunch of settings, and collects the results.
+
+Now, let's write some tests for our small software discussed above using the <code>unittest</code> module.
+<ol>
+	<li>Create a file named "tests.py".</li>
+	<li>In "tests.py" import <code>unittest</code>.</li>
+	<li>Create a class named <code>TestClass</code> which inherits from the class <code>unittest.TestCase</code>.
+		<strong>Rule 1:</strong> All the tests are written as the methods of a class, which must inherit from the class <code>unittest.TestCase</code>.</li>
+	<li>Create a test method as shown below.
+		<strong>Rule 3:</strong> Name of each and every test should start with "test" otherwise it'll be skipped.
+		<div class="noIdeBtnDiv">
+		[sourcecode language="Python3" highlight=""]
+		def test_area(self):
+			sq = Square(2)	# creates a Square of side 2 units.
+
+			# test if the area of the above square is 4 units, display an error message if it's not.
+			self.assertEqual(sq.area(), 4, f'Area is shown {sq.area()} rather than 9')
+		[/sourcecode]
+		</div>
+
+		Note: Do not forget to import the class <code>Square</code> in "test.py".
+
+		<strong>Rule 3:</strong> You use special <code>assertEqual()</code> statements instead of the built-in <code>assert</code> statements.
+
+		The first argument of <code>assertEqual()</code> is the actual output, the second argument is the desired output and the third argument is the error message which would be displayed in case the test fails.</li>
+	<li>To run the tests described in the test file "tests.py", we need to call the method <code>unittest.main()</code>, add the following code in the "tests.py" module.
+		<div class="noIdeBtnDiv">
+		[sourcecode language="Python3" highlight=""]
+		if __name__ == '__main__':
+			unittest.main()
+		[/sourcecode]
+		</div></li>
+</ol>
+
+Finally the "tests.py" module should resemble the code given below.
+<div class="noIdeBtnDiv">
+[sourcecode language="Python3" highlight=""]
+import unittest
+from app import Square
+
+class TestSum(unittest.TestCase):
+	def test_area(self):
+		sq = Square(2)
+		self.assertEqual(sq.area(), 4, f'Area is shown {sq.area()} rather than 9')
+
+if __name__ == '__main__':
+	unittest.main()
+[/sourcecode]
+</div>
+
+Having written our test cases let us now test our application for any bugs. To test your application you simply need to excute the test file "tests.py" using command prompt or any IDE of your choice. The output should be something like this.
+<pre>.
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+</pre>
+In the first line, a <code>.</code>(dot) represents a successful test while an 'F' would represent a failed test case.
+
+Let us add a few more tests in "tests.py" and retest our application.
+<div class="noIdeBtnDiv">
+[sourcecode language="Python3" highlight=""]
+import unittest
+from app import Square
+
+class TestSum(unittest.TestCase):
+	def test_area(self):
+		sq = Square(2)
+		self.assertEqual(sq.area(), 4, f'Area is shown {sq.area()} rather than 9')
+
+	def test_area_negative(self):
+		sq = Square(-3)
+		self.assertEqual(sq.area(), -1, f'Area is shown {sq.area()} rather than -1 for negative side length')
+
+	def test_perimeter(self):
+		sq = Square(5)
+		self.assertEqual(sq.perimeter(), 20, f'Perimeter is {sq.perimeter()} rather than 20')
+
+	def test_perimeter_negative(self):
+		sq = Square(-6)
+		self.assertEqual(sq.perimeter(), -1, f'Perimeter is {sq.perimeter()} rather than -1 for negative side length')
+
+if __name__ == '__main__':
+	unittest.main()
+[/sourcecode]
+</div>
+<pre>.F.F
+======================================================================
+FAIL: test_area_negative (__main__.TestSum)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;tests_unittest.py&quot;, line 11, in test_area_negative
+    self.assertEqual(sq.area(), -1, f&apos;Area is shown {sq.area()} rather than -1 for negative side length&apos;)
+AssertionError: 9 != -1 : Area is shown 9 rather than -1 for negative side length
+
+======================================================================
+FAIL: test_perimeter_negative (__main__.TestSum)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;tests_unittest.py&quot;, line 19, in test_perimeter_negative
+    self.assertEqual(sq.perimeter(), -1, f&apos;Perimeter is {sq.perimeter()} rather than -1 for negative side length&apos;)
+AssertionError: -24 != -1 : Perimeter is -24 rather than -1 for negative side length
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.001s
+
+FAILED (failures=2)</pre>
+A few things to note in the above test report are:
+<ul>
+	<li>The first line represents that test 1 and test 3 executed successfully while test 2 and test 4 failed</li>
+	<li>Each failed test case is described in the report, the first line of the description contains the name of the failed test case and the last line contains the error message we defined for that test case.</li>
+	<li>At the end of the report you can see the number of failed tests, if no test fails the report will end with <code>OK</code>
+	</li>
+</ul>
+
+Note: For further knowledge you can read the complete documentation of <a href="https://docs.python.org/2/library/unittest.html"><code>unittest</code></a>.
+
+<h3>The "nose2" module</h3>
+The purpose of <code>nose2</code> is to extend <code>unittest</code> to make testing easier. <code>nose2</code> is compatible with tests written using the <code>unittest</code> testing framework and can be used as a replacement of the <code>unittest</code> test runner.
+
+<strong>Installation:</strong> <code>nose2</code> can be installed from the python packaging index using the commnad,
+<pre>pip install nose2</pre>
+
+<strong>Use:</strong> Go to the project source directory and run <code>nose2</code> using the command,
+<pre>nose2</pre>
+All the python modules with name starting from "test" are considered as test files. On execution, <code>nose2</code> will look for test files in the sub-directories,
+<ul>
+	<li>which are python packages (contain "__init__.py").</li>
+	<li>whose name starts with "test" after being lowercased i.e. TestFiles, tests.</li>
+	<li>which are named either "src" or "lib".</li>
+</ul> 
+<code>nose2</code> first loads all the test files present in the project and then the testing begins. Thus, with <code>nose2</code> we can split our tests among various test files and execute them at once, which is very useful when dealing with large number of tests.
+
+Let us now learn about different customisation options provided by <code>nose2</code> which can help us 	during the testing process.
+<ol>
+	<li><strong>Changing the search directory</strong>
+	If we want to change the directory in which <code>nose2</code> searchs for test files, we can do that using the command line arguments <code>-s</code> or <code>--start-dir</code> as,
+	<pre>nose2 -s DIR_ADD DIR_NAME</pre>
+	here, <code>DIR_NAME</code> is the directory in which we want to search for the test files and, <code>DIR_ADD</code> is the address of the directory <code>DIR_NAME</code>.
+	This is extremely useful when you want to test only one feature of your application at a time.</li>
+
+	<li><strong>Running specific test cases</strong>
+		Using <code>nose2</code> we can also run specific test cases at a time by using the command line arguments <code>-s</code> and <code>--start-dir</code> as,
+		<pre>nose2 -s DIR_ADD DIR_NAME.TEST_FILE.TEST_CLASS.TEST_NAME</pre>
+		<ul>
+			<li>TEST_NAME: name of the test method.</li>
+			<li>TEST_CLASS: class in which the test method is defined.</li>
+			<li>TEST_FILE: name of the test file in which the test case is defined i.e. test.py.</li>
+			<li>DIR_NAME: directory in which the test file exists.</li>
+			<li>DIR_ADD: address of the parent directory of DIR_NAME.</li>
+		</ul>
+	</li>
+</ol>
+
      
      </div> 
     </div>
 </div>
 
-
+<br>
 
 <div class="container">
-    <div class="col-lg-12">
-        <div class="author">
+    <div id="tags" class="col-lg-12">
+        <div class="rel-tag">
             Related Tags:
         </div>
-        <ul class ="tags">
-        <li><div class="author"></li>    
+        <ul class ="tag-list"><br>
+        
             {% for tag in article.tags.all %}
-              <a href="{% url 'tag_url' tag.id %}">{{tag}}</a>
+              <li>  <a href="{% url 'tag_url' tag.id %}">{{tag}}</a></li>
             {% empty %}
             None
             {% endfor %}
-        </div>
         </ul>
     </div>
 </div>           
@@ -100,4 +291,27 @@ Unlike the methods .__init__() and .area() the .face_area() method of Cube is so
 
 <h3>Got any queries? get it resolved <a href="{% url 'board_url' article.discussion_board.id %}">here</a>.</h3>
 
+
+
+  <!--==========================
+    Footer
+  ============================-->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong>Pythonic</strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        
+       Made with &hearts; for a Better Web <br>
+       Designed by Nitin Kumar
+      </div>
+    </div>
+  </footer><!-- #footer -->
 {% endblock %}

@@ -59,7 +59,7 @@
   #hero {
     width: 100%;
     height: 100vh;
-    background: url("/static/img/header.jpg") top center; 
+    background: url("/media/tests/thumbnail.jpeg") top center; 
     opacity: 0.9;        
     background-size: cover;
     position: relative;
@@ -156,8 +156,10 @@
 }
 
 img{
-  position: relative;
-  left: 40%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
 }
 
 .author{
@@ -175,4 +177,78 @@ img{
 
 .author:hover a{
   color : #fff;
+}
+
+
+#tags{
+  display:inline-block;
+
+
+}
+
+#tags .rel-tag{
+  display: block;
+  color: #fff;
+  padding: 5px;
+  border-radius: 20px;
+  width : 110px;
+  background-color: #2dc997;
+}
+
+.tag-list{
+  text-decoration: none;
+  padding: 5px;
+  display: inline;
+  list-style: none;
+  list-style-type: none;
+}
+
+.tag-list li{
+  margin:  5px;
+  padding: 10px;
+  display: inline;
+  border: 1px solid #2dc997;
+  border-radius: 20px;
+  width : 110px;
+  transition: all ease-in 0.2s;
+}
+
+.tag-list li:hover {
+  background: #2dc997;
+ }
+
+.tag-list li:hover a{
+  color: #fff;
+}
+
+@media (max-width:540px){
+  .tag-list li{
+    display : inline-block;
+    margin: 2px;
+    padding: 5px;
+
+  }
+
+}
+
+
+/*--------------------------------------------------------------
+# Footer
+--------------------------------------------------------------*/
+#footer {
+  background: #343b40;
+  padding: 30px 0;
+  color: #fff;
+  font-size: 14px;
+}
+
+#footer .copyright {
+  text-align: center;
+}
+
+#footer .credits {
+  padding-top: 10px;
+  text-align: center;
+  font-size: 13px;
+  color: #ccc;
 }

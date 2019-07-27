@@ -154,7 +154,7 @@
 .card{
    
     max-width: 400px; 
-    height: 600px;
+    height: 500px;
     margin: 10px;
     border: 1px solid #e6e6e6; 
     border-radius: 10px;      
@@ -165,7 +165,7 @@
 
 .card:hover{
      
-   border : 3px solid #2dc997;
+   border : 2px solid #2dc997;
    background-color: rgba(0, 0, 0, 0.1); 
     
 }  

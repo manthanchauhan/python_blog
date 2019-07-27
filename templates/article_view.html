@@ -62,21 +62,20 @@
     </div>
 </div>
 
-
+<br>
 
 <div class="container">
-    <div class="col-lg-12">
+    <div id="tags" class="col-lg-12">
         <div class="rel-tag">
             Related Tags:
         </div>
-        <ul class ="tags">
-        <li><div class="author"></li>    
+        <ul class ="tag-list"><br>
+        
             {% for tag in article.tags.all %}
-              <a href="{% url 'tag_url' tag.id %}">{{tag}}</a></li>
+              <li>  <a href="{% url 'tag_url' tag.id %}">{{tag}}</a></li>
             {% empty %}
             None
             {% endfor %}
-        </div>
         </ul>
     </div>
 </div>           
@@ -90,4 +89,27 @@
 
 <h3>Got any queries? get it resolved <a href="{% url 'board_url' article.discussion_board.id %}">here</a>.</h3>
 
+
+
+  <!--==========================
+    Footer
+  ============================-->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong>Pythonic</strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        
+       Made with &hearts; for a Better Web <br>
+       Designed by Nitin Kumar
+      </div>
+    </div>
+  </footer><!-- #footer -->
 {% endblock %}

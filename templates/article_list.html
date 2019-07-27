@@ -32,13 +32,6 @@ Blog
     </div>
   </section><!-- #hero -->
 
-
-   
-
-
-
-
-
     <div class="container">
         <div class="row">
             {% for article in articles %}
@@ -46,7 +39,7 @@ Blog
                           <div class="card">
                               <figure>
 
-                                <img class="cover" src= "{% static './img/Manthan.PNG'%}">
+                                <img class="cover" src= "{{article.thumbnail.url}}">
                               
                               </figure>
                               <br>
@@ -54,7 +47,7 @@ Blog
                                 {% for author in article.authors.all  %}
                                   <strong class="author">|Author: {{author}} </strong>
                                 {% endfor %} 
-                                <strong class="date"><i class="far fa-clock"></i> {{article.date_created}} </strong>
+                                <strong class="date"><i class="fa fa-clock"></i> {{article.date_created}} </strong>
                               
                               </div>
                               <div class="card-body">
@@ -73,9 +66,7 @@ Blog
         </div> <!-- End Row -->
     </div>
 
-
   <br>
-
  
   <!--==========================
     Footer
@@ -98,8 +89,5 @@ Blog
       </div>
     </div>
   </footer><!-- #footer -->
-
-
-
 
 {% endblock content %}
