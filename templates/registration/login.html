@@ -1,21 +1,39 @@
-{% extends 'base.html' %}
 
-{% block title %}
-Login
-{% endblock %}
+{% load static %}
+
+<title> Login </title> 
+
+
+{% block css %}
+ <link href="{%static 'css/login.css'%}" rel="stylesheet" type="text/css">
+{% endblock css %}
 
 {% block content %}
-<h2>Login</h2>
-{% if not request.user.is_authenticated %}
-<form method="post">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button type="submit">Login</button>
-</form><br>
 
-Don't have an account? Signup <a href="{% url 'signup_url' %}">here</a>.<br>
-<strong>Forgot password?</strong> Reset you password <a href="{% url 'password_reset' %}">here</a>.
-{% else %}
-Error: You visited the wrong page.
-{% endif %}
-{% endblock %}
+<body>
+   
+    <div class="loginbox">
+        <img src="/static/img/avatar.png" class="avatar">
+        
+        <h1>Login Here</h1>
+        
+        <form method="post">
+            {% csrf_token %}
+            <p>Username</p>
+            <input type="text" name="" placeholder="Enter Username">
+            
+            <p>Password</p>
+            <input type="password" name="" placeholder="Enter Password">
+            
+            <input type="submit" name="" value="Login">
+            
+            <!-- required links -->
+            <p>Lost Your Password?<a  href="{% url 'password_reset' %}"> Reset Here</a></p><br>
+            <p>Don't have an account?<a href="/signup/">  Sign Up</a></p>
+        </form>
+        
+    </div>
+
+</body>
+
+{% endblock content %}
